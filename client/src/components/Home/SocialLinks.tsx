@@ -16,7 +16,6 @@ const socialLinks = [
     iconUrl: `${baseIconsUrl}whatsappBorder.svg`,
     url: "https://wa.me/123456789",
   },
-  { iconUrl: `${baseIconsUrl}mailBorder.svg`, url: "Mail:info@sologate.com" },
 ];
 
 export default function SocialIcons() {
