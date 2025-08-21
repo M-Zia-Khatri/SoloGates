@@ -86,7 +86,7 @@ export default function ComingSoon() {
         {/* Text (fades in when bg opacity ≥ 0.8) */}
         {stage === 1 && (
           <motion.div
-            className="h-full flex flex-col items-center justify-center -translate-y-2.5 text-center relative z-50 space-y-10 w-full"
+            className="h-full flex flex-col items-center justify-center -translate-y-2.5 text-center relative z-50 space-y-5 w-full"
             animate={showText ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
@@ -94,15 +94,15 @@ export default function ComingSoon() {
               className="font-medium tracking-widest"
               style={{
                 fontSize: "clamp(2rem, 8vw, 4rem)",
-                letterSpacing: "clamp(0.2em, 6vw, 2em)",
+                letterSpacing: "clamp(0.2em, 4vw, 2em)",
               }}
             >
               Coming soon
             </h1>
             <h2
-              className="font-medium tracking-widest"
+              className="font-medium tracking-widest text-zinc-200"
               style={{
-                fontSize: "clamp(1rem, 4vw, 2rem)",
+                fontSize: "clamp(1rem, 4vw, 1.25rem)",
                 letterSpacing: "clamp(0.05em, 2vw, 0.2em)",
               }}
             >
