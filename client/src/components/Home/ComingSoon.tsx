@@ -9,6 +9,7 @@ const delay = 2;
 const repeatDelay = 2;
 const durationTime = delay * 2;
 const cycleTime = (repeatDelay + durationTime) * 1000;
+const comingSoonStr = "Coming soon";
 
 export default function ComingSoon() {
   const { isComingSoon, countdown } = useComingSoon();
@@ -24,13 +25,12 @@ export default function ComingSoon() {
 
   // Toggle stages every full animation cycle
   useEffect(() => {
-    if (!offset) return;
-    const timer = setInterval(
-      () => setStage((s) => (s === 1 && isComingSoon ? 2 : 1)),
-      cycleTime
-    );
-    return () => clearInterval(timer);
-  }, [offset]);
+    if (!offset || !isComingSoon) return;
+    const timer = setTimeout(() => {
+      setStage(2); // move to stage 2
+    }, cycleTime);
+    return () => clearTimeout(timer);
+  }, [offset, isComingSoon]);
 
   return (
     <div className="relative w-screen h-screen flex items-start justify-center overflow-hidden text-white bg-Bg-Primary">
@@ -91,13 +91,17 @@ export default function ComingSoon() {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <h1
-              className="font-medium tracking-widest"
+              className="font-medium flex flex-wrap"
               style={{
                 fontSize: "clamp(2rem, 8vw, 4rem)",
-                letterSpacing: "clamp(0.2em, 4vw, 2em)",
+                gap: "clamp(0.2em, 4vw, 2em)",
               }}
             >
-              Coming soon
+              {comingSoonStr.split("").map((char, i) => (
+                <span key={i} className="inline-block">
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              ))}
             </h1>
             <h2
               className="font-medium tracking-widest text-zinc-200"
