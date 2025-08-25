@@ -14,11 +14,10 @@ const socialLinks = [
   },
   {
     iconUrl: `${baseIconsUrl}whatsappBorder.svg`,
-    url: "https://wa.me/123456789",
+    url: "https://wa.me/+923003351248",
   },
 ];
 // grid grid-cols-4 gap-2.5 px-8 md:gap-6 md:px-16 lg:gap:3 lg:px-12 xl:gap-4 xl:px-10
-
 
 export default function SocialIcons({ width }: { width: number }) {
   return (
@@ -26,7 +25,7 @@ export default function SocialIcons({ width }: { width: number }) {
       className="absolute flex items-center justify-between"
       style={{
         width,
-        gap : `${width * 0.05}px` ,
+        gap: `${width * 0.05}px`,
         zIndex: 10,
         padding: `0px ${width * 0.11}px`,
         top: `calc(${width * 0.3}px)`,

@@ -46,7 +46,10 @@ export default function ComingSoon() {
   }, [offset, isComingSoon]);
 
   return (
-    <div className="bg-Bg-Primary relative flex h-screen w-screen items-start justify-center overflow-hidden p-4 text-white">
+    <div
+      className="bg-Bg-Primary relative flex h-screen w-screen items-start justify-center overflow-hidden p-4 text-white"
+      style={{ paddingTop: "7.5vh" }}
+    >
       {/* Stage switching content (Logo / Countdown) */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
@@ -104,7 +107,7 @@ export default function ComingSoon() {
 
       {/* Floating illusion container */}
       <motion.div
-        className={`absolute bottom-0 flex w-full items-center justify-center`}
+        className={`absolute -bottom-4 flex w-full items-center justify-center`}
         style={{ height: floatingBollSize }}
         initial={{ opacity: 0, scale: 0.9 }}
         animate={
