@@ -10,6 +10,19 @@ const repeatDelay = 2;
 const durationTime = delay * 2;
 const cycleTime = (repeatDelay + durationTime) * 1000;
 const comingSoonStr = "Coming soon";
+const imgUrl: string =
+  window.innerWidth >= 640
+    ? "/logos/LongLogoBlackBG.png"
+    : "/logos/LogoBlackBG-copy.png";
+let offsetPercent = 0;
+let floatingBollSize = 0;
+if (window.innerHeight * 0.5 > window.innerWidth) {
+  offsetPercent = 0.4;
+  floatingBollSize = window.innerHeight * offsetPercent + 0.1;
+} else {
+  offsetPercent = 0.5;
+  floatingBollSize = window.innerHeight * offsetPercent + 0.1;
+}
 
 export default function ComingSoon() {
   const { isComingSoon, countdown } = useComingSoon();
@@ -20,7 +33,7 @@ export default function ComingSoon() {
 
   // Compute offset once
   useEffect(() => {
-    setOffset(window.innerHeight * 0.5);
+    setOffset(window.innerHeight * (offsetPercent - 0.075));
   }, []);
 
   // Toggle stages every full animation cycle
@@ -33,36 +46,56 @@ export default function ComingSoon() {
   }, [offset, isComingSoon]);
 
   return (
-    <div className="relative w-screen h-screen flex items-start justify-center overflow-hidden text-white bg-Bg-Primary">
+    <div className="bg-Bg-Primary relative flex h-screen w-screen items-start justify-center overflow-hidden p-4 text-white">
       {/* Stage switching content (Logo / Countdown) */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: [0, 1, 1, 0], scale: [0.9, 1, 1, 0.9] }}
-        transition={{
-          delay,
-          duration: durationTime,
-          repeat: Infinity,
-          repeatDelay,
-          ease: "easeInOut",
-          times: [0, 0.25, 0.75, 1],
-        }}
+        animate={
+          stage === 1
+            ? { opacity: [0, 1, 1, 0], scale: [0.9, 1, 1, 0.9] } // loop for logo
+            : { opacity: 1, scale: 1 } // stable for timer
+        }
+        transition={
+          stage === 1
+            ? {
+                delay,
+                duration: durationTime,
+                repeat: Infinity,
+                repeatDelay,
+                ease: "easeInOut",
+                times: [0, 0.25, 0.75, 1],
+              }
+            : { delay, duration: 1, ease: "easeOut" } // only fade-in once
+        }
       >
         {stage === 1 ? (
-          <motion.img
-            className="h-[55vh] z-50"
-            src="/images/logos/LongLogoBlackBG.png"
-          />
+          <>
+            {/* img*/}
+            <motion.img
+              className="z-50 w-[85vw] sm:h-[55vh] sm:w-fit"
+              src={imgUrl}
+            />
+          </>
         ) : (
           <>
-            <div className="h-[40vh] w-[40vh] grid grid-cols-2 grid-rows-2 p-4 gap-4">
+            {/* timer */}
+            {/* gap-4 p-4 md:gap-6 md:p-6 lg:gap-4 lg:p-4 */}
+            <div
+              className="grid h-[40vh] w-[40vh] grid-cols-2 grid-rows-2"
+              style={{
+                padding: "calc(40vh * 0.0625)",
+                gap: "calc(40vh * 0.0375)",
+              }}
+            >
               <TimeBox label="Day" value={countdown?.days ?? 0} />
               <TimeBox label="Hours" value={countdown?.hours ?? 0} />
               <TimeBox label="Minutes" value={countdown?.minutes ?? 0} />
               <TimeBox label="Sec" value={countdown?.seconds ?? 0} />
             </div>
+
             {!isComingSoon && (
               <div className="text-center text-lg">
-                It will be arriving sometime soon.
+                <p>It will be arriving sometime soon.</p>
               </div>
             )}
           </>
@@ -71,30 +104,39 @@ export default function ComingSoon() {
 
       {/* Floating illusion container */}
       <motion.div
+        className={`absolute bottom-0 flex w-full items-center justify-center`}
+        style={{ height: floatingBollSize }}
         initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: [0, 1, 1, 0], scale: [0.9, 1, 1, 0.9] }}
-        transition={{
-          delay,
-          duration: durationTime,
-          repeat: Infinity,
-          repeatDelay,
-          ease: "easeInOut",
-          times: [0, 0.25, 0.75, 1],
-        }}
-        className="absolute flex justify-center items-center bottom-0 w-full h-[60vh]"
+        animate={
+          stage === 1
+            ? { opacity: [0, 1, 1, 0], scale: [0.9, 1, 1, 0.9] } // loop for logo
+            : { opacity: 1, scale: 1 } // stable for timer
+        }
+        transition={
+          stage === 1
+            ? {
+                delay,
+                duration: durationTime,
+                repeat: Infinity,
+                repeatDelay,
+                ease: "easeInOut",
+                times: [0, 0.25, 0.75, 1],
+              }
+            : { delay, duration: 1, ease: "easeOut" } // only fade-in once
+        }
       >
         {/* Text (fades in when bg opacity ≥ 0.8) */}
         {stage === 1 && (
           <motion.div
-            className="h-full flex flex-col items-center justify-center -translate-y-2.5 text-center relative z-50 space-y-5 w-full"
+            className="relative z-50 flex h-full w-full -translate-y-2.5 flex-col items-center justify-center space-y-5 text-center"
             animate={showText ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <h1
-              className="font-medium flex flex-wrap"
+              className="flex flex-wrap font-medium"
               style={{
-                fontSize: "clamp(2rem, 8vw, 4rem)",
-                gap: "clamp(0.2em, 4vw, 2em)",
+                fontSize: "clamp(2rem, 8vw, 5rem)",
+                gap: "clamp(0.2em, 4vw, 2.5em)",
               }}
             >
               {comingSoonStr.split("").map((char, i) => (
@@ -106,7 +148,7 @@ export default function ComingSoon() {
             <h2
               className="font-medium tracking-widest text-zinc-200"
               style={{
-                fontSize: "clamp(1rem, 4vw, 1.25rem)",
+                fontSize: "clamp(0.75rem, 3.5vw, 1.75rem)",
                 letterSpacing: "clamp(0.05em, 2vw, 0.2em)",
               }}
             >
@@ -115,21 +157,29 @@ export default function ComingSoon() {
           </motion.div>
         )}
 
-        {stage === 2 && <SocialIcons />}
+        {stage === 2 && <SocialIcons width={floatingBollSize} />}
 
         {/* Background glowing sphere */}
         <motion.div
-          className="h-full w-[60vh] bg-gradient-to-b from-[rgba(255,255,255,0.5)] from-0% via-Bg-Primary via-30% to-Bg-Primary/50 to-95% rounded-full absolute drop-shadow-lg"
-          style={{ zIndex: 2 }}
-          animate={{ opacity: [0, 1, 1, 0] }}
-          transition={{
-            delay,
-            duration: durationTime,
-            repeat: Infinity,
-            repeatDelay,
-            ease: "easeInOut",
-            times: [0, 0.25, 0.75, 1],
-          }}
+          className={`via-Bg-Primary to-Bg-Primary/50 absolute h-full rounded-full bg-gradient-to-b from-[rgba(255,255,255,0.5)] from-0% via-30% to-95% drop-shadow-lg`}
+          style={{ zIndex: 2, width: floatingBollSize }}
+          animate={
+            stage === 1
+              ? { opacity: [0, 1, 1, 0] } // loop for logo
+              : { opacity: 1 } // stable for timer
+          }
+          transition={
+            stage === 1
+              ? {
+                  delay,
+                  duration: durationTime,
+                  repeat: Infinity,
+                  repeatDelay,
+                  ease: "easeInOut",
+                  times: [0, 0.25, 0.75, 1],
+                }
+              : { delay, duration: 1, ease: "easeOut" } // only fade-in once
+          }
           onUpdate={(latest) => {
             if (typeof latest.opacity === "number")
               setShowText(latest.opacity >= 0.8);
@@ -138,7 +188,7 @@ export default function ComingSoon() {
 
         {/* Floating orb */}
         <motion.div
-          className="w-[30vh] h-[30vh] bg-Secondary absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 rounded-full blur-[50px]"
+          className="bg-Secondary absolute bottom-0 left-1/2 h-1/2 -translate-x-1/2 translate-y-1/2 rounded-full"
           animate={{ y: [0, -offset, -offset, 0] }}
           transition={{
             delay,
@@ -148,7 +198,11 @@ export default function ComingSoon() {
             ease: "easeInOut",
             times: [0, 0.25, 0.75, 1],
           }}
-          style={{ zIndex: isFront ? 3 : 1 }}
+          style={{
+            zIndex: isFront ? 3 : 1,
+            width: floatingBollSize / 2,
+            filter: `blur(${floatingBollSize / 7}px)`,
+          }}
           onUpdate={(latest) => {
             if (typeof latest.y === "number") {
               const tolerance = 20;
