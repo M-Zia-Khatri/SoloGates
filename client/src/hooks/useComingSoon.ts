@@ -18,7 +18,7 @@ type UseComingSoonResult = {
  * - Set START_ISO to the UTC ISO datetime when the cooldown begins.
  * - DurationDays is the cooldown length (10).
  */
-const START_ISO = "2025-08-15T00:00:00Z"; // <-- set the begin date/time (UTC)
+const START_ISO = "2025-08-25T00:00:00Z"; // <-- set the begin date/time (UTC)
 const DURATION_DAYS = 16;
 
 async function fetchServerTime(): Promise<number | null> {
