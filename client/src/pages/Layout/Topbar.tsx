@@ -1,7 +1,7 @@
 import { AppNavigation } from "@/constants/navigationConstants";
 import { assetsUrl } from "@/constants/urlConstants";
 import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { href, Link } from "react-router-dom";
 
 export default function Topbar() {
   const [activePage, setActivePage] = useState<string>(AppNavigation.home);
@@ -21,7 +21,7 @@ export default function Topbar() {
         <nav>
           <ul className="flex w-full items-center space-x-1.5 capitalize">
             {navLink.map((it, idx) => (
-              <Link to={it.herf} key={idx}>
+              <Link to={it.herf} key={idx} onClick={() => setActivePage(href)}>
                 <li>{it.lable}</li>
               </Link>
             ))}
