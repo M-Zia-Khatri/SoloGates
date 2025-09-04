@@ -1,11 +1,10 @@
-import Content from "./Content/Content";
-// import Topbar from "./Topbar/Topbar";
-
+import Content from "./Content";
+import Topbar from "./Topbar";
 
 export default function AuthenticatedAppRoot() {
   return (
     <>
-      {/* <Topbar /> */}
+      <Topbar />
       <Content />
     </>
   );

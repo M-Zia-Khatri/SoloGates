@@ -2,7 +2,7 @@ export const AppNavigation = {
   home: "/",
   about: "/about-us",
   blogs: "/blogs",
-  service: "/service",
+  services: "/services",
   portfolio: "/portfolio",
   contact: "/contact-us",
   settings: "/settings",

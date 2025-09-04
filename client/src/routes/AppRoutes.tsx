@@ -5,6 +5,7 @@ import { Navigate } from "react-router-dom";
 import type { RouteObject } from "react-router-dom";
 import AboutUs from "../pages/user_pages/AboutUs";
 
+
 const AppRoutes: RouteObject[] = [
   {
     path: AppNavigation.home,

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import useComingSoon from "../../hooks/useComingSoon";
+import useComingSoon from "@/hooks/useComingSoon";
 import SocialIcons from "./SocialLinks";
 import TimeBox from "./TimeBox";
 
