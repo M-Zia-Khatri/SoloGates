@@ -22,9 +22,11 @@ export default function App() {
   }, []);
 
   return (
-    <ReactLenis root options={{ autoRaf: false }} ref={lenisRef}>
+    <>
+      {/* <ReactLenis root options={{ autoRaf: false }} ref={lenisRef}> */}
       {isComingSoon && <RouterProvider router={AppRouter} />}
       {!isComingSoon && <ComingSoon />}
-    </ReactLenis>
+      {/* </ReactLenis> */}
+    </>
   );
 }

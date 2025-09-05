@@ -151,7 +151,7 @@
     @apply text-Secondary bg-gradient-to-r from-Highlight via-Main to-Highlight bg-[length:90%_2px] bg-no-repeat bg-bottom;
   }
   .sec-container{
-    @apply px-6 
+    @apply px-16 
   }
 
 }
@@ -169,3 +169,9 @@
  .button {
     @apply bg-Secondary rounded-full h-fit py-1 hover:border border-Main hover:bg-gradient-to-t from-Secondary to-Highlight  transition-all duration-300 ease-in-out
   }
+
+  .about-box {
+  clip-path: polygon(0 0, 85% 0, 100% 25%, 100% 100%, 0 100%);
+  background: #fff;
+  padding: 5%;
+}
