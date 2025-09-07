@@ -13,7 +13,7 @@ const comingSoonStr = "Coming soon";
 const imgUrl: string =
   window.innerWidth >= 640
     ? "/logos/LongLogoBlackBG.png"
-    : "/logos/LogoBlackBG-copy.png";
+    : "/logos/LogoBlackBG.png";
 let offsetPercent = 0;
 let floatingBollSize = 0;
 if (window.innerHeight * 0.5 > window.innerWidth) {
