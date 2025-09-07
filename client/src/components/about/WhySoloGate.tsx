@@ -32,7 +32,7 @@ const WhySoloGate = () => {
       <div className="relative flex flex-col justify-center items-center gap-10 md:flex-row lg:gap-20">
         {/* background */}
         <img
-          className="absolute top-1/2 left-1/2 -z-10 w-[0%] -translate-1/2 rotate-y-180"
+          className="absolute top-1/2 left-1/2 -z-10 w-[100%] -translate-1/2 rotate-y-180"
           src={`${assetsUrl.iconsUrl}aboutUsBg.svg`}
         />
 
