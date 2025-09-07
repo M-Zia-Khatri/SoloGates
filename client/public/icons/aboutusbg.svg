@@ -1,0 +1,29 @@
+<svg width="1873" height="1030" viewBox="0 0 1873 1030" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_297_542)">
+<path d="M1780.26 933.811L93.209 937.321V93.1918H1570.56C1652.47 174.83 1698.35 220.56 1780.26 302.198V933.811Z" fill="url(#paint0_linear_297_542)" fill-opacity="0.2" shape-rendering="crispEdges"/>
+<path d="M1570.14 94.1947C1610.96 134.874 1642.83 166.639 1674.7 198.406C1706.57 230.171 1738.44 261.936 1779.25 302.614V932.809L94.2119 936.316V94.1947H1570.14Z" stroke="url(#paint1_linear_297_542)" stroke-width="2.00625" shape-rendering="crispEdges"/>
+<path d="M1570.14 94.1947C1610.96 134.874 1642.83 166.639 1674.7 198.406C1706.57 230.171 1738.44 261.936 1779.25 302.614V932.809L94.2119 936.316V94.1947H1570.14Z" stroke="black" stroke-opacity="0.2" stroke-width="2.00625" shape-rendering="crispEdges"/>
+</g>
+<defs>
+<filter id="filter0_d_297_542" x="0.821159" y="0.803947" width="1871.82" height="1028.91" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="48.15" operator="erode" in="SourceAlpha" result="effect1_dropShadow_297_542"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="70.2689"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.0901961 0 0 0 0 0.541176 0 0 0 0 0.545098 0 0 0 1 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_297_542"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_297_542" result="shape"/>
+</filter>
+<linearGradient id="paint0_linear_297_542" x1="913.086" y1="93.1918" x2="913.086" y2="662.967" gradientUnits="userSpaceOnUse">
+<stop stop-color="#DDDCDC" stop-opacity="0.27"/>
+<stop offset="1" stop-opacity="0.2"/>
+</linearGradient>
+<linearGradient id="paint1_linear_297_542" x1="93.209" y1="515.257" x2="1780.26" y2="515.257" gradientUnits="userSpaceOnUse">
+<stop stop-color="#09466E"/>
+<stop offset="0.5" stop-color="#178A8B"/>
+<stop offset="1" stop-color="#6FCCDD"/>
+</linearGradient>
+</defs>
+</svg>
