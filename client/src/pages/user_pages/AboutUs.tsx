@@ -1,8 +1,9 @@
 import AboutUsBanner from "@/components/about/AboutUsBanner";
 import AboutUsSec from "@/components/about/AboutUsSec";
 import MissionVisionSec from "@/components/about/MissionVisionSec";
+import OurTeamSec from "@/components/about/OurTeamSec";
 import OwnerMessagesSec from "@/components/about/OwnerMessagesSec";
-import WhySoloGate from "@/components/about/WhySoloGate";
+import WhySoloGateSec from "@/components/about/WhySoloGateSec";
 
 export default function AboutUs() {
   return (
@@ -11,7 +12,8 @@ export default function AboutUs() {
       <AboutUsSec />
       <MissionVisionSec />
       <OwnerMessagesSec />
-      <WhySoloGate />
+      <WhySoloGateSec />
+      <OurTeamSec />
     </>
   );
 }

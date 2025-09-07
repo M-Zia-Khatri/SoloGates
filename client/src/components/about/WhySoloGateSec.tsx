@@ -1,7 +1,7 @@
 import { assetsUrl } from "@/constants/urlConstants";
 import { useMemo } from "react";
 
-const WhySoloGate = () => {
+const WhySoloGateSec = () => {
   const data = useMemo(
     () => [
       {
@@ -29,7 +29,7 @@ const WhySoloGate = () => {
   );
   return (
     <section className="sec-container">
-      <div className="relative flex flex-col justify-center items-center gap-10 md:flex-row lg:gap-20">
+      <div className="relative flex flex-col items-center justify-center gap-10 md:flex-row lg:gap-20">
         {/* background */}
         <img
           className="absolute top-1/2 left-1/2 -z-10 h-[100%] -translate-1/2 rotate-y-180"
@@ -39,7 +39,7 @@ const WhySoloGate = () => {
         {/* Content  */}
         <div className="w-[80%]">
           {/* Heading or Subtitle */}
-          <div className="flex flex-col items-center gap-3 justify-center text-center">
+          <div className="flex flex-col items-center justify-center gap-3 text-center">
             <h2 className="">Why Sologate</h2>
             <h3 className="">Strategy, Execution, Results.</h3>
             <p className="">
@@ -65,4 +65,4 @@ const WhySoloGate = () => {
   );
 };
 
-export default WhySoloGate;
+export default WhySoloGateSec;
