@@ -1,8 +1,9 @@
 @font-face {
   font-family: 'BebasKai';
   src: url(/fonts/BebasKai.ttf) format('truetype');
-  
+
 }
+
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&family=Sora:wght@100..800&display=swap');
 
 @import "tailwindcss";
@@ -47,14 +48,14 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  
 
-  --color-Bg-Primary:rgb(16, 16, 16);
-  --color-Main:rgb(9, 70, 110);
-  --color-Secondary:rgb(23, 138, 139);
-  --color-Highlight:rgb(111, 204, 221);
-  --color-Navy : #1D1F20;
-  --color-white:rgb(255, 255, 255);
+
+  --color-Bg-Primary: rgb(16, 16, 16);
+  --color-Main: rgb(9, 70, 110);
+  --color-Secondary: rgb(23, 138, 139);
+  --color-Highlight: rgb(111, 204, 221);
+  --color-Navy: #1D1F20;
+  --color-white: rgb(255, 255, 255);
   --font-BebasKai: 'BebasKai', sans-serif;
   --font-Rubik: 'Rubik', sans-serif;
   --font-Sora: 'Sora', sans-serif;
@@ -135,43 +136,91 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-Bg-Primary text-white font-Rubik;
   }
-  h1{
+
+  h1 {
     @apply font-BebasKai;
   }
-  h2,h3,h4,h5,h6{
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-Sora;
-  }
-  .underline-effect {
-    @apply bg-gradient-to-r from-Highlight via-Main to-Highlight bg-[length:0%_2px] hover:bg-[length:90%_2px] bg-no-repeat bg-bottom transition-all duration-300;
-  }
-  .activePage{
-    @apply text-Secondary bg-gradient-to-r from-Highlight via-Main to-Highlight bg-[length:90%_2px] bg-no-repeat bg-bottom;
-  }
-  .sec-container{
-    @apply px-16 
   }
 
 }
+
 @layer components {
   .card {
     @apply bg-card text-card-foreground rounded-lg shadow-md p-4;
   }
+
   .input {
     @apply border border-border rounded-md px-3 py-2 focus:ring focus:ring-ring focus:border-Main transition-colors duration-200;
   }
+
   .link {
     @apply text-Main hover:text-Secondary underline transition-colors duration-200;
   }
-}
- .button {
-    @apply bg-Secondary rounded-full h-fit py-1 hover:border border-Main hover:bg-gradient-to-t from-Secondary to-Highlight  transition-all duration-300 ease-in-out
+
+  .btn-primary {
+    @apply bg-gradient-to-l from-Secondary from-0% to-Bg-Primary/30 to-100%;
+    box-shadow:
+      0px 3px 3px rgb(0, 0, 0),
+      0px 0px 20px var(--color-Secondary);
   }
 
+  .sec-container {
+    @apply px-4 md:px-6
+  }
+
+
   .about-box {
-  clip-path: polygon(0 0, 85% 0, 100% 25%, 100% 100%, 0 100%);
-  background: #fff;
-  padding: 5%;
+    clip-path: polygon(0 0, 85% 0, 100% 25%, 100% 100%, 0 100%);
+    background: #fff;
+    padding: 5%;
+  }
+}
+
+.activePage {
+  position: relative;
+}
+
+.activePage::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 2px;
+  background: radial-gradient(circle, var(--color-Highlight), rgb(0, 0, 0, 0.05));
+  filter: blur(0.5px);
+}
+
+.underline-effect {
+  position: relative;
+}
+
+.underline-effect::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0%;
+  height: 2px;
+  background: radial-gradient(circle, var(--color-Highlight), rgb(0, 0, 0, 0.05));
+  filter: blur(0.5px);
+  transition: all 0.3s ease-in-out;
+
+}
+
+.underline-effect:hover::after {
+  width: 90%;
 }
