@@ -4,20 +4,24 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-const headingVariants = cva("text-lg shrink-0 px-2", {
-  variants: {
-    hdVariant: {
-      default: "",
+const headingVariants = cva(
+  "text-white font-semibold tracking-wide shrink-0 px-2 md:px-2.5 lg:px-3 xl:px-3.5 2xl:px-4",
+  {
+    variants: {
+      hdVariant: {
+        default: "",
+      },
+      hdSize: {
+        h1: "text-3xl",
+        h2: "text-lg md:text-xl lg:text:2xl xl:text-3xl ",
+      },
     },
-    hdSize: {
-      h1: "text-3xl",
+    defaultVariants: {
+      hdVariant: "default",
+      hdSize: "h1",
     },
   },
-  defaultVariants: {
-    hdVariant: "default",
-    hdSize: "h1",
-  },
-});
+);
 
 const bgVariants = cva(
   "w-full absolute -z-10 bg-gradient-to-r from-Main via-Secondary to-Highlight",
@@ -82,6 +86,7 @@ function Heading({
         className={cn(bgVariants({ bgVariant, className: bgClassName }))}
         style={{ clipPath }}
       />
+      {/* <h2 className="font-semibold tracking-wide text-xl"> test</h2> */}
     </div>
   );
 }
