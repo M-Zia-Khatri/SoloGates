@@ -3,7 +3,7 @@ import { assetsUrl } from "@/constants/urlConstants";
 const AboutUsBanner = () => {
   return (
     <section
-      className="sec-container flex h-[90vh] items-center justify-center"
+      className="sec-container flex h-[92vh] items-center justify-center lg:h-[88vh]"
       style={{}}
     >
       {/* banner image */}

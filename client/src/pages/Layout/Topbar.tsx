@@ -38,15 +38,15 @@ export default function Topbar() {
                 onClick={() => setActivePage(it.href)}
                 className={` ${it.href === activePage ? "activePage text-Secondary" : "underline-effect"}`}
               >
-                <li>{it.label}</li>
+                <li className="xl:text-lg" >{it.label}</li>
               </Link>
             ))}
           </ul>
         </nav>
 
         {/* contact button */}
-        <div className="btn-primary text-md px-2 py-1 font-semibold tracking-wide md:px-3 md:py-1.5 lg:px-4 lg:py-2 xl:px-5 xl:py-2.5 2xl:px-6 2xl:p-3">
-          <Link className="capitalize" to={AppNavigation.contact}>
+        <div className="btn-primary px-2 py-1 font-semibold tracking-wide md:px-3 md:py-1.5 lg:px-4 lg:py-2 xl:px-5 xl:py-2.5 2xl:p-3 2xl:px-6">
+          <Link className="capitalize xl:text-lg" to={AppNavigation.contact}>
             Contact us
           </Link>
         </div>
