@@ -1,5 +1,5 @@
-import { assetsUrl } from "@/constants/urlConstants";
-import MsnVsnCard from "./MsnVsnCard";
+import { assetsUrl } from '@/constants/urlConstants';
+import MsnVsnCard from './MsnVsnCard';
 
 const MissionVisionSec = () => {
   return (
@@ -10,14 +10,16 @@ const MissionVisionSec = () => {
           className="bg-Secondary hidden h-[90px] md:block md:h-[100px] 2xl:h-[120px]"
           style={{
             clipPath:
-              "polygon(0 0, 61% 0, 71% 99%,  100% 99%, 100% 100%, 70.99% 100%, 60.99% 1%, 0 1%, 0 0)",
+              'polygon(0 0, 61% 0, 71% 99%,  100% 99%, 100% 100%, 70.99% 100%, 60.99% 1%, 0 1%, 0 0)',
           }}
         />
-        <p className="headingMsnVsn left-[2.5%]">Our Mission</p>
+        <p className="BgHeading top-1/2 left-[2.5%] -z-50 md:absolute md:-translate-y-1/2">
+          Our Mission
+        </p>
       </div>
 
       {/* decoration */}
-      <div className="from-Secondary absolute top-1/2 left-1/2 -z-30 h-[calc(75vw*0.5)] w-[80%] shrink-0 -translate-1/2 bg-radial to-70% to-[#00000000] blur-3xl opacity-50" />
+      <div className="from-Secondary absolute top-1/2 left-1/2 -z-30 h-[calc(75vw*0.5)] w-[80%] shrink-0 -translate-1/2 bg-radial to-[#00000000] to-70% opacity-50 blur-3xl" />
 
       {/* content */}
       <div className="sec-container my-4 grid grid-cols-1 gap-2 gap-y-4 md:my-2 md:flex lg:my-4 2xl:my-6">
@@ -41,12 +43,14 @@ const MissionVisionSec = () => {
       </div>
       {/* bottom */}
       <div className="relative text-center md:text-left">
-        <p className="headingMsnVsn right-[2.5%]">Our Vision</p>
+        <p className="BgHeading top-1/2 right-[2.5%] -z-50 md:absolute md:-translate-y-1/2">
+          Our Vision
+        </p>
         <div
           className="bg-Secondary hidden h-[90px] md:block md:h-[100px] 2xl:h-[120px]"
           style={{
             clipPath:
-              "polygon(0 0, 31% 0, 41% 99%,  100% 99%, 100% 100%, 40.99% 100%, 30.99% 1%, 0 1%, 0 0)",
+              'polygon(0 0, 31% 0, 41% 99%,  100% 99%, 100% 100%, 40.99% 100%, 30.99% 1%, 0 1%, 0 0)',
           }}
         />
       </div>
