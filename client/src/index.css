@@ -190,6 +190,13 @@
   @apply font-Sora bg-gradient-to-t from-[#00000000] from-10% to-[#dddcdc5e] bg-clip-text text-5xl font-bold text-transparent opacity-20 md:text-7xl lg:text-8xl 2xl:text-9xl;
 }
 
+.whySGCBorderRight {
+  @apply from-Main via-Secondary absolute top-1/2 left-[calc(100%+4px)] -z-10 h-[90%] -translate-y-1/2 bg-radial from-0% to-[#00000003] to-70% px-2 opacity-45 blur-[2px];
+}
+.whySGCBorderBottom {
+  @apply from-Main via-Secondary absolute top-[calc(100%+4px)] left-1/2 -z-10 w-[90%] -translate-x-1/2 bg-radial from-0% to-[#00000003] to-70% py-2 opacity-45 blur-[2px];
+}
+
 .activePage {
   position: relative;
 }

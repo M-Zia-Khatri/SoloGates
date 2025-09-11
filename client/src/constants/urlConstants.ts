@@ -1,4 +1,4 @@
-export const assetsBaseUrl = "/public/"
+export const assetsBaseUrl = "/"
 export const assetsUrl = {
     imagesUrl : `${assetsBaseUrl}images/`,
     logosUrl : `${assetsBaseUrl}logos/`,
