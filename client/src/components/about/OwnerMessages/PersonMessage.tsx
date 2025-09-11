@@ -64,7 +64,9 @@ const PersonMessage = ({
     return () => window.removeEventListener('resize', updateClipPath);
   }, []);
   return (
-    <div className={`grid grid-cols-1 lg:grid-cols-3`}>
+    <div
+      className={`${reverse ? 'lg:mb-10 xl:mb-12 2xl:mb-16' : ''} grid grid-cols-1 lg:grid-cols-3`}
+    >
       {/* Content */}
       <div
         className={`relative order-1 col-span-1 flex flex-col items-center justify-center lg:col-span-2 ${
@@ -147,8 +149,7 @@ const PersonMessage = ({
       {/* Image */}
       <div className="relative h-full w-full">
         <img
-          className="top-1/2 left-1/2 w-full -translate-[0.35%] scale-135 md:-translate-[0.25%] md:scale-125 lg:absolute lg:-translate-1/2 lg:scale-150 xl:scale-125 xl-translate-[0
-          %]"
+          className="xl-translate-[0 %] top-1/2 left-1/2 w-full -translate-[0.35%] scale-135 md:-translate-[0.25%] md:scale-125 lg:absolute lg:-translate-1/2 lg:scale-150 xl:scale-125 2xl:scale-105 "
           src={image}
           alt={name}
         />
