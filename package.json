@@ -1,0 +1,19 @@
+{
+  "name": "sologate",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "installAll": "yarn && cd ./server && yarn   && cd ../client && yarn && cd ..",
+    "client": "cd client && yarn dev",
+    "server": "cd server && yarn start",
+    "start": "concurrently \"yarn server\" \"yarn client\""
+  },
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
