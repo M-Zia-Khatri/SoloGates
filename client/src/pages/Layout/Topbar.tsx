@@ -1,8 +1,8 @@
-import { AppNavigation } from "@/constants/navigationConstants";
-import { assetsUrl } from "@/constants/urlConstants";
-import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { FaBars } from "react-icons/fa6";
+import { AppNavigation } from '@/constants/navigationConstants';
+import { assetsUrl } from '@/constants/urlConstants';
+import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FaBars } from 'react-icons/fa6';
 
 export default function Topbar() {
   const [activePage, setActivePage] = useState<string>(AppNavigation.home);
@@ -13,11 +13,11 @@ export default function Topbar() {
 
   const navLink = useMemo(
     () => [
-      { label: "home", href: AppNavigation.home },
-      { label: "about", href: AppNavigation.about },
-      { label: "services", href: AppNavigation.services },
+      { label: 'home', href: AppNavigation.home },
+      { label: 'about', href: AppNavigation.about },
+      { label: 'services', href: AppNavigation.services },
     ],
-    [],
+    []
   );
 
   return (
@@ -36,19 +36,22 @@ export default function Topbar() {
                 to={it.href}
                 key={idx}
                 onClick={() => setActivePage(it.href)}
-                className={` ${it.href === activePage ? "activePage text-Secondary" : "underline-effect"}`}
+                className={` ${it.href === activePage ? 'activePage text-Secondary' : 'underline-effect'}`}
               >
-                <li className="xl:text-lg" >{it.label}</li>
+                <li className="xl:text-lg">{it.label}</li>
               </Link>
             ))}
           </ul>
         </nav>
 
         {/* contact button */}
-        <div className="btn-primary px-2 py-1 font-semibold tracking-wide md:px-3 md:py-1.5 lg:px-4 lg:py-2 xl:px-5 xl:py-2.5 2xl:p-3 2xl:px-6">
-          <Link className="capitalize xl:text-lg" to={AppNavigation.contact}>
-            Contact us
-          </Link>
+        <div className="fixed right-8 bottom-6 z-50">
+          <div className="bg-Bg-Primary absolute top-0 left-0 z-40 h-full w-full" />
+          <div className="btn-primary relative z-50 px-2 py-1 font-semibold tracking-wide md:px-3 md:py-1.5 lg:px-4 lg:py-2 xl:px-5 xl:py-2.5 2xl:p-3 2xl:px-6">
+            <Link className="capitalize xl:text-lg" to={AppNavigation.contact}>
+              Contact us
+            </Link>
+          </div>
         </div>
 
         {/* logo */}
