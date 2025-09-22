@@ -3,6 +3,7 @@ import { assetsUrl } from '@/constants/urlConstants';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars } from 'react-icons/fa6';
+import { Button } from '@/components/ui/button';
 
 export default function Topbar() {
   const [activePage, setActivePage] = useState<string>(AppNavigation.home);
@@ -16,6 +17,8 @@ export default function Topbar() {
       { label: 'home', href: AppNavigation.home },
       { label: 'about', href: AppNavigation.about },
       { label: 'services', href: AppNavigation.services },
+      { label: 'portfolio', href: AppNavigation.portfolio },
+      { label: 'contact us', href: AppNavigation.contact },
     ],
     []
   );
@@ -46,12 +49,12 @@ export default function Topbar() {
 
         {/* contact button */}
         <div className="fixed right-8 bottom-6 z-50">
-          <div className="bg-Bg-Primary absolute top-0 left-0 z-40 h-full w-full" />
-          <div className="btn-primary relative z-50 px-2 py-1 font-semibold tracking-wide md:px-3 md:py-1.5 lg:px-4 lg:py-2 xl:px-5 xl:py-2.5 2xl:p-3 2xl:px-6">
+          <div />
+          <Button >
             <Link className="capitalize xl:text-lg" to={AppNavigation.contact}>
               Contact us
             </Link>
-          </div>
+          </Button>
         </div>
 
         {/* logo */}
