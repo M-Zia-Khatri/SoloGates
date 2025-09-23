@@ -5,16 +5,18 @@ import Glow from '../ui/Glow';
 
 const IntroSec = () => {
   return (
-    <section className="sec-container relative flex flex-col items-center gap-8 overflow-x-hidden py-8">
+    <section className="sec-container relative flex flex-col items-center gap-4 overflow-x-hidden py-4 lg:gap-8 lg:py-8">
       {/* decoration */}
-      <Glow className="top-[5%] -left-[10%] opacity-80" />
-      <Glow className="-right-[10%] bottom-[2%] opacity-80" />
+      <Glow className="top-[5%] -left-[10%] hidden opacity-80 md:block" />
+      <Glow className="-right-[10%] bottom-[2%] hidden opacity-80 md:block" />
 
       <Heading asChild hdSize="h2">
         <h2>About Sologate</h2>
       </Heading>
 
-      <div className="h-fit w-[90%] drop-shadow-[0_5px_15px_rgba(23,138,139,0.5)]">
+      <div
+        className={`h-fit w-full drop-shadow-[0_${window.innerWidth < 1024 ? '1px_8px' : '5px_15px'}_rgba(23,138,139,0.5)] lg:w-[90%]`}
+      >
         <AspectRatio ratio={16 / 9}>
           <img src={`${assetsUrl.imagesUrl}dome-img.png`} />
         </AspectRatio>
