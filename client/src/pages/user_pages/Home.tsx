@@ -39,27 +39,26 @@ export default function Home() {
       <HeroSec />
       <IntroSec />
       <WhySoloGateSec />
-      <section className="sec-container my-6 space-y-6">
-        <div className="flex flex-col items-center gap-4">
-          <Heading asChild hdSize="h2">
-            <h2>Trusted by Clients, Loved by Audiences</h2>
+      <section className="sec-container my-8 w-screen space-y-4 ">
+        <div className="flex flex-col items-center gap-0.5 lg:gap-4">
+          <Heading asChild hdSize="h4">
+            <h4>Trusted by Clients, Loved by Audiences</h4>
           </Heading>
-          <div className="mt-4 flex items-center justify-center gap-1.5">
+          <div className="mt-2 lg:mt-4 flex items-center justify-center gap-1.5">
             <HrLine className="h-[3px] w-[4vw]" />
-            <h3 className="flex shrink-0 font-semibold">
+            <h5 className="flex shrink-0 font-semibold">
               What Our &nbsp;
-              <h3 className="font-thin italic">Partners Say About Us.</h3>
-            </h3>
+              <h5 className="font-thin italic">Partners Say About Us.</h5>
+            </h5>
             <HrLine className="h-[3px] w-[4vw]" isRotate />
           </div>
-          <p>
+          <p className="text-center">
             From startups to established businesses, our clients trust Sologate
             to deliver creativity, consistency, and results.
           </p>
         </div>
         <TestimonialContainer />
       </section>
-
       <section className="sec-container my-4">
         <TrustedBy items={items} gap={50} direction={'horizontal'} reverse />
       </section>
