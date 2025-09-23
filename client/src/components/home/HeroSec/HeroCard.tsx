@@ -55,7 +55,7 @@ const HeroCard = ({
   }, []);
 
   return (
-    <div className="relative w-fit px-4 py-3.5">
+    <div className="relative w-full px-3.5 py-3 md:w-fit lg:px-4 lg:py-3.5">
       <>
         {/* Gradient outer border with shadow */}
         <div className="absolute top-1/2 left-1/2 -z-40 h-[100%] w-[100%] -translate-1/2">
@@ -69,7 +69,7 @@ const HeroCard = ({
         <div
           className="absolute top-1/2 left-1/2 -z-30 h-[calc(100%-4px)] w-[calc(100%-4px)] -translate-1/2"
           style={{
-            filter: `drop-shadow(0px 0px 7.5px rgba(23,138,139))`,
+            filter: `drop-shadow(0px 0px 5px rgba(23,138,139))`,
           }}
         >
           <div
@@ -90,8 +90,8 @@ const HeroCard = ({
 
       {/* content */}
       <div>
-        <h6>{heading}</h6>
-        <p >
+        <p className="font-medium">{heading}</p>
+        <p className="mt-1">
           {subtitle.map((it, idx) =>
             idx === 1 ? (
               it
