@@ -52,7 +52,7 @@ const TestimonialCard = ({ item }: { item: TestimonialInt }) => {
   }, []);
 
   return (
-    <div className="relative flex w-full max-w-md flex-col gap-6 p-6 shadow-lg">
+    <div className="relative flex w-full max-w-xs md:max-w-md flex-col gap-4 px-4 py-6 shadow-lg">
       {/* Background */}
       <>
         {/* Gradient outer border with shadow */}
@@ -89,18 +89,21 @@ const TestimonialCard = ({ item }: { item: TestimonialInt }) => {
       {/* Stars */}
       <div className="flex gap-1">
         {[...Array(5)].map((_, i) => (
-          <MdStar key={i} className="h-5 w-5 fill-cyan-400 text-cyan-400" />
+          <MdStar
+            key={i}
+            className={`h-4.5 w-4.5 ${item.rating > i ? 'text-Secondary fill-Secondary' : 'fill-white/50 text-white/50'}`}
+          />
         ))}
       </div>
 
       {/* Testimonial Text */}
-      <p className="text-base leading-relaxed font-medium text-white" lang="de">
+      <p className="leading-relaxed font-medium" lang="de">
         {item.paragraphs}
       </p>
 
       {/* User Info */}
       <div className="mt-2 flex items-center gap-4">
-        <Avatar className="h-12 w-12">
+        <Avatar className="h-8 w-8">
           <AvatarImage src={item.imageUrl} alt={item.name} />
           <AvatarFallback>
             {item.name
@@ -111,8 +114,8 @@ const TestimonialCard = ({ item }: { item: TestimonialInt }) => {
           </AvatarFallback>
         </Avatar>
         <div>
-          <div className="text-lg font-semibold text-white">{item.name}</div>
-          <div className="text-sm text-gray-400">{item.role}</div>
+          <h5 className="font-semibold text-white">{item.name}</h5>
+          <h6 className="text-gray-400">{item.role}</h6>
         </div>
       </div>
     </div>

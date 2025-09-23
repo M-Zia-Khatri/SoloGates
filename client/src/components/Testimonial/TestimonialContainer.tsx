@@ -84,33 +84,41 @@ const [firstHalf, secondHalf] = [
 console.log(firstHalf, secondHalf);
 const TestimonialContainer = () => {
   return (
-    <div className="grid w-full grid-cols-3 gap-6 py-2.5">
-      <div className="max-h-[90vh] overflow-hidden">
+    <div className="grid w-full gap-6 py-2.5 md:grid-cols-3">
+      <div className="hidden max-h-[90vh] overflow-hidden md:block">
         <InfiniteSlider className="px-4" gap={25} reverse direction="vertical">
           {firstHalf.map((item, index) => (
             <TestimonialCard key={index} item={item} />
           ))}
         </InfiniteSlider>
       </div>
-      <div className="from-Main via-Secondary to-Highlight relative -z-30 h-fit w-full bg-gradient-to-r p-4 drop-shadow-[0_2.5px_7.5px_rgba(23,138,139,1)]">
+      <div className="from-Main via-Secondary to-Highlight relative -z-30 h-fit w-[80%] justify-self-center bg-gradient-to-r px-4 py-6 drop-shadow-[0_2.5px_7.5px_rgba(23,138,139,1)] md:w-full">
         <div className="bg-Bg-Primary absolute top-1/2 left-1/2 -z-20 h-[calc(100%-3px)] w-[calc(100%-3px)] -translate-1/2" />
         <div className="absolute top-1/2 left-1/2 -z-10 h-[calc(100%-3px)] w-[calc(100%-3px)] -translate-1/2 bg-gradient-to-t from-black/75 from-5% to-[#dddcdc30]" />
+
         <img className="w-full" src={`${assetsUrl.imagesUrl}dome-img2.png`} />
-        <div className="mt-3 flex flex-col items-center justify-center gap-1 text-center">
-          <p>
+
+        <div className="mt-4 px-1 flex flex-col items-center justify-center text-center">
+          <p >
             We don't start with Canva, We start with questions. What's your
             business goal? What do your customers want? What emotion Should your
             brand leave
           </p>
-          <h4>Leo Donovan</h4>
-          <p className="text-Secondary text-xs">Collage, Student</p>
+          <h4 className='mt-2'>Leo Donovan</h4>
+          <p className="text-Secondary">Collage, Student</p>
         </div>
       </div>
       <div className="max-h-[90vh] overflow-hidden">
-        <InfiniteSlider className="px-4" gap={25} direction="vertical">
-          {firstHalf.map((item, index) => (
-            <TestimonialCard key={index} item={item} />
-          ))}
+        <InfiniteSlider
+          className="py-4"
+          gap={25}
+          direction={`${window.innerWidth < 768 ? 'horizontal' : 'vertical'}`}
+        >
+          {(window.innerWidth < 768 ? Testimonial : firstHalf).map(
+            (item, index) => (
+              <TestimonialCard key={index} item={item} />
+            )
+          )}
         </InfiniteSlider>
       </div>
     </div>
