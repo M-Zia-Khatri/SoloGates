@@ -1,6 +1,7 @@
 import { Heading } from '@/components/ui/Heading';
 import WhySoloGateCard from './WhySoloGateCard';
 import { useEffect, useRef, useState } from 'react';
+import Glow from './ui/Glow';
 
 const WhySoloGateSec = () => {
   const bgRef = useRef<HTMLDivElement>(null);
@@ -51,7 +52,7 @@ const WhySoloGateSec = () => {
   }, []);
 
   return (
-    <section className="sec-container overflow-hidden">
+    <section className="sec-container overflow-hidden py-8">
       <div className="relative flex items-center justify-center">
         {/* background */}
         <>
@@ -78,6 +79,10 @@ const WhySoloGateSec = () => {
             />
           </div>
         </>
+
+        {/* decoration */}
+        <Glow className="top-0 z-50 h-[2.5%] w-[50%] -translate-y-1/12 from-0% to-90% opacity-90 blur-[5px]" />
+        <Glow className="bottom-0 z-50 h-[2%] w-[80%] translate-y-1/12 from-0% to-90% opacity-50 blur-[5px]" />
 
         {/* Content  */}
         <div className="flex w-full flex-col gap-4 px-3.5 py-4 md:w-[95%] md:gap-5 md:px-5 md:py-6 lg:gap-6 lg:px-6 lg:py-7 xl:gap-7 xl:px-7 xl:py-8 2xl:px-8 2xl:py-9">
