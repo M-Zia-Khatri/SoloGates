@@ -14,7 +14,7 @@ const TrustedBy = ({ items, ...props }: TrustedByProps) => {
   return (
     <InfiniteSlider {...props}>
       {items.map((it, idx) => (
-        <img key={idx} src={it.src} alt={it.alt ?? 'trusted brand'} />
+        <img className='h-10' key={idx} src={it.src} alt={it.alt ?? 'trusted brand'} />
       ))}
     </InfiniteSlider>
   );
