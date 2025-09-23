@@ -147,7 +147,7 @@
 
   p,
   span {
-    @apply text-xs tracking-wider hyphens-auto sm:text-sm md:text-base 2xl:text-lg;
+    @apply text-[10px] tracking-wider hyphens-auto sm:text-xs md:text-sm lg:text-base 2xl:text-lg;
   }
 }
 

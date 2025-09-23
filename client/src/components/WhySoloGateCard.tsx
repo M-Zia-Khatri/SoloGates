@@ -40,16 +40,16 @@ const WhySoloGateCard = () => {
             {/* gif and number */}
             <div className="flex w-full items-center justify-center md:justify-between md:pr-2">
               <img
-                className="h-[70px] md:h-[76.66666666666667px] lg:h-[83.33333333333333px] xl:h-[90px] 2xl:h-[95px]"
+                className="h-12 md:h-16 lg:h-[83.33333333333333px] xl:h-[90px] 2xl:h-[95px]"
                 src={it.gifUrl}
                 alt=""
               />
               <p className="hidden md:block">0{idx + 1}</p>
             </div>
 
-            <h4 className="font-Sora font-medium tracking-wide md:text-lg">
+            <h5 className="font-Sora font-medium tracking-wide">
               {it.heading}
-            </h4>
+            </h5>
             <p lang="de">{it.textContent}</p>
           </div>
 
@@ -67,17 +67,8 @@ const WhySoloGateCard = () => {
               )
             )}
             {window.innerWidth >= 768 &&
-            window.innerWidth < 1024 &&
-            data.length > idx + 2 ? (
-              <div className="whySGCBorderBottom" />
-            ) : (
-              window.innerWidth < 768 &&
-              data.length !== idx + 1 && (
-                <div
-                  className={`whySGCBorderBottom ${idx === 0 ? 'right-0-[15px]' : 'left-[15px]'} -translate-y-0`}
-                />
-              )
-            )}
+              window.innerWidth < 1024 &&
+              data.length > idx + 2 && <div className="whySGCBorderBottom" />}
           </>
         </div>
       ))}
