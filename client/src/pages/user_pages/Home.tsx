@@ -59,8 +59,8 @@ export default function Home() {
         </div>
         <TestimonialContainer />
       </section>
-      <section className="sec-container my-4">
-        <TrustedBy items={items} gap={50} direction={'horizontal'} reverse />
+      <section className="sec-container my-4 md:my-6 lg:my-8 ">
+        <TrustedBy speed={10} items={items} gap={50} direction={'horizontal'} reverse />
       </section>
     </>
   );
