@@ -1,3 +1,4 @@
+import MainPackagesSec from '@/components/services/PackagesSec/MainPackagesSec';
 import ServicesBannerSec from '@/components/services/ServicesBannerSec';
 import TrustedBy from '@/components/TrustedBy';
 import HrLine from '@/components/ui/HrLine';
@@ -34,6 +35,7 @@ const Services = () => {
   return (
     <>
       <ServicesBannerSec />
+      <MainPackagesSec />
       <section className="sec-container">
         <div className="mt-6 mb-2 space-y-4 md:mt-7 md:mb-3 md:space-y-5 lg:mt-8 lg:mb-4 lg:space-y-6 xl:mt-9 xl:mb-5 xl:space-y-7 2xl:mt-10 2xl:mb-6 2xl:space-y-8">
           {/* heading & underline */}

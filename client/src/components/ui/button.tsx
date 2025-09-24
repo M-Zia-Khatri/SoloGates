@@ -49,7 +49,7 @@ function Button({
       className={cn(buttonVariants({ variant, size, className }))}
       {...props}
     >
-      <span className="relative z-10">{children}</span>
+      {children}
     </Comp>
   );
 }
