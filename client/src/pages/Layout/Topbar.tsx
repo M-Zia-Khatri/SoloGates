@@ -35,7 +35,7 @@ export default function Topbar() {
       <div className="border-Secondary text-md flex h-[6vh] items-center justify-between border-b-2 px-1 py-1.5 sm:px-2 md:px-3 lg:h-[10vh] lg:px-4 xl:px-5 2xl:text-lg">
         {/* drawer bar */}
         <div className="md:hidden">
-          <Sheet >
+          <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline">
                 <FaBars size="24px" />
@@ -45,7 +45,6 @@ export default function Topbar() {
               side="top"
               className="box-shadow-[0_4px_30px_rgba(23,138,139,0.2)] from-Secondary/10 border-Secondary/30 w-full gap-0 border-b bg-gradient-to-t to-black/5 backdrop-blur-[5px]"
             >
-              
               <SheetHeader className="">
                 <SheetClose asChild>
                   <Link to="#" className="absolute top-4 left-4 text-white">
@@ -60,7 +59,7 @@ export default function Topbar() {
                       <Link
                         to={it.href}
                         onClick={() => setActivePage(it.href)}
-                        className={` mt-2 mb-3 ${
+                        className={`mt-2 mb-3 ${
                           it.href === activePage
                             ? 'activePage text-Secondary'
                             : 'underline-effect'
@@ -69,7 +68,7 @@ export default function Topbar() {
                         <li>{it.label}</li>
                       </Link>
                     </SheetClose>
-                    <div className='pt-0.5 bg-Secondary w-full' />
+                    <div className="bg-Secondary w-full pt-0.5" />
                   </Fragment>
                 ))}
               </ul>
@@ -103,7 +102,7 @@ export default function Topbar() {
         </nav>
 
         {/* contact button */}
-        <div className="fixed right-8 bottom-6 z-50">
+        <div className="fixed right-8 bottom-6 z-50 hidden md:block">
           <div />
           <Button>
             <Link className="capitalize xl:text-lg" to={AppNavigation.contact}>
