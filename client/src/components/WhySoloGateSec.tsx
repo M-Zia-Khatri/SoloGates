@@ -18,10 +18,10 @@ const WhySoloGateSec = () => {
             0% 0%,
             ${
               offsetHeight < offsetWidth
-                ? offsetWidth - offsetHeight * 0.25
+                ? offsetWidth - offsetHeight * 0.2
                 : offsetWidth - offsetHeight * 0.075
             }px 0%,
-            100% ${offsetHeight < offsetWidth ? '25%' : '7.5%'},
+            100% ${offsetHeight < offsetWidth ? '20%' : '7.5%'},
             100% 100%,
             0% 100%,
             0 0
@@ -31,10 +31,10 @@ const WhySoloGateSec = () => {
             0% 0%,
             ${
               offsetHeight < offsetWidth
-                ? offsetWidth - offsetHeight * 0.25 + 2
+                ? offsetWidth - offsetHeight * 0.2 + 2
                 : offsetWidth - offsetHeight * 0.075 + 2
             }px 0%,
-            100% ${offsetHeight < offsetWidth ? '25%' : '7.5%'},
+            100% ${offsetHeight < offsetWidth ? '20%' : '7.5%'},
             100% 100%,
             0% 100%,
             0 0
@@ -51,12 +51,12 @@ const WhySoloGateSec = () => {
   }, []);
 
   return (
-    <section className="sec-container my-4 overflow-hidden lg:my-8">
-      <div className="relative my-2 flex items-center justify-center">
+    <section className="sec-container my-4 overflow-hidden md:my-6 lg:my-8">
+      <div className="relative my-2 flex items-center justify-center md:my-3">
         {/* background */}
         <>
           {/* Gradient outer border */}
-          <div className="absolute top-1/2 left-1/2 -z-40 h-[100%] w-full -translate-1/2 rotate-y-180 md:w-[95%]">
+          <div className="absolute top-1/2 left-1/2 -z-40 h-full w-full -translate-1/2 rotate-y-180">
             <div
               className="from-Main to-Secondary h-full w-full bg-gradient-to-r"
               style={{ clipPath: clipPaths.offset }}
@@ -65,12 +65,12 @@ const WhySoloGateSec = () => {
 
           {/*background middle layer */}
           <div
-            className="bg-Bg-Primary absolute top-1/2 left-1/2 -z-30 h-[calc(100%-4px)] w-[calc(100%-4px)] -translate-1/2 rotate-y-180 md:w-[calc(95%-4px)]"
+            className="bg-Bg-Primary absolute top-1/2 left-1/2 -z-30 h-[calc(100%-4px)] w-[calc(100%-4px)] -translate-1/2 rotate-y-180"
             style={{ clipPath: clipPaths.base }}
           />
 
           {/* Background overlay*/}
-          <div className="absolute top-1/2 left-1/2 -z-20 h-[calc(100%-4px)] w-[calc(100%-4px)] -translate-1/2 rotate-y-180 md:w-[calc(95%-4px)]">
+          <div className="absolute top-1/2 left-1/2 -z-20 h-[calc(100%-4px)] w-[calc(100%-4px)] -translate-1/2 rotate-y-180">
             <div
               ref={bgRef}
               className="h-full w-full bg-gradient-to-t from-black/75 from-5% to-[#dddcdc30]"
@@ -86,18 +86,16 @@ const WhySoloGateSec = () => {
         </>
 
         {/* Content  */}
-        <div className="flex w-full flex-col gap-4 px-3.5 py-4 md:w-[95%] md:gap-5 md:px-5 md:py-6 lg:gap-6 lg:px-6 lg:py-7 xl:gap-7 xl:px-7 xl:py-8 2xl:px-8 2xl:py-9">
+        <div className="flex w-full flex-col gap-4 px-3.5 py-4 md:gap-5 md:px-5 md:py-6 lg:gap-6 lg:px-6 lg:py-7 xl:gap-7 xl:px-7 xl:py-8 2xl:px-8 2xl:py-9">
           {/* Heading or Subtitle */}
-          <div className="flex flex-col items-center justify-center gap-1 text-center md:gap-2">
+          <div className="flex flex-col items-center justify-center gap-1 text-center lg:gap-1.5">
             <Heading hdSize="h3" asChild>
-              <h3 >Why Sologate</h3>
+              <h3>Why Sologate</h3>
             </Heading>
             <h4 className="font-Sora mt-2 font-medium">
               Strategy | Execution | Results.
             </h4>
-            <p className="">
-              Not just another agency we are your competitive edge.
-            </p>
+            <p>Not just another agency we are your competitive edge.</p>
           </div>
 
           {/* Cards */}

@@ -39,12 +39,12 @@ export default function Home() {
       <HeroSec />
       <IntroSec />
       <WhySoloGateSec />
-      <section className="sec-container my-8 w-screen space-y-4 ">
-        <div className="flex flex-col items-center gap-0.5 lg:gap-4">
+      <section className="sec-container my-8 w-screen space-y-4 md:space-y-6">
+        <div className="flex flex-col items-center gap-0.5 md:gap-1 lg:gap-4">
           <Heading asChild hdSize="h4">
             <h4>Trusted by Clients, Loved by Audiences</h4>
           </Heading>
-          <div className="mt-2 lg:mt-4 flex items-center justify-center gap-1.5">
+          <div className="mt-2 flex items-center justify-center gap-1.5 lg:mt-4">
             <HrLine className="h-[3px] w-[4vw]" />
             <h5 className="flex shrink-0 font-semibold">
               What Our &nbsp;
@@ -59,8 +59,14 @@ export default function Home() {
         </div>
         <TestimonialContainer />
       </section>
-      <section className="sec-container my-4 md:my-6 lg:my-8 ">
-        <TrustedBy speed={10} items={items} gap={50} direction={'horizontal'} reverse />
+      <section className="sec-container my-4 md:my-6 lg:my-8">
+        <TrustedBy
+          speed={10}
+          items={items}
+          gap={50}
+          direction={'horizontal'}
+          reverse
+        />
       </section>
     </>
   );
