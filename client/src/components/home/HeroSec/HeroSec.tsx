@@ -5,7 +5,7 @@ import Glow from '@/components/ui/Glow';
 const HeroSec = () => {
   return (
     <section className="sec-container overflow-x-hidden">
-      <div className="h-[92vh] lg:h-[88vh]">
+      <div className="h-[94vh] lg:h-[90vh]">
         {/* background */}
         <div className="absolute top-0 left-0 -z-50 h-screen w-full overflow-hidden opacity-75">
           <img

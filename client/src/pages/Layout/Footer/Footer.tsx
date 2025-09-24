@@ -1,4 +1,3 @@
-import { assetsBaseUrl, assetsUrl } from '@/constants/urlConstants';
 import FooterBottom from './FooterBottom';
 import FooterDivider from './FooterDivider';
 import FooterLeft from './FooterLeft';
