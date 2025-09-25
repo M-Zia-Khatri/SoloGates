@@ -1,5 +1,11 @@
+import ThreeDEarth from './ThreeDEartht';
+
 const ShowcaseServicesContent = () => {
-  return <div>ShowcaseServicesContent</div>;
+  return (
+    <div>
+      <ThreeDEarth />
+    </div>
+  );
 };
 
 export default ShowcaseServicesContent;
