@@ -3,6 +3,7 @@ import TrustedBy from '@/components/TrustedBy';
 import WhySoloGateSec from '@/components/WhySoloGateSec';
 import HeroSec from '@/components/home/HeroSec/HeroSec';
 import IntroSec from '@/components/home/IntroSec';
+import ShowcaseServicesContent from '@/components/showcaseServices/ShowcaseServicesContent';
 import { Heading } from '@/components/ui/Heading';
 import HrLine from '@/components/ui/HrLine';
 import { assetsUrl } from '@/constants/urlConstants';
@@ -38,8 +39,36 @@ export default function Home() {
     <>
       <HeroSec />
       <IntroSec />
+      <section className="sec-container">
+        {/* heading & sub-heading & sub-title */}
+        <div className="">
+          {/* heading */}
+          <Heading asChild hdSize="h3">
+            <h3>What We Do</h3>
+          </Heading>
+
+          <div className="my-4">
+            {/* sub-heading */}
+            <div className="mt-2 flex items-center justify-center gap-1.5 lg:mt-4">
+              <HrLine className="h-[3px] w-[4vw]" />
+              <h4 className="flex shrink-0 font-semibold">
+                What Our &nbsp;
+                <h4 className="font-thin italic">Partners Say About Us.</h4>
+              </h4>
+              <HrLine className="h-[3px] w-[4vw]" isRotate />
+            </div>
+            {/* sub-title */}
+            <p>
+              At Sologate, every service is designed to move your brand closer
+              to influence, impact, and growth.
+            </p>
+          </div>       
+        </div>
+
+        <ShowcaseServicesContent />
+      </section>
       <WhySoloGateSec />
-      <section className="w-full overflow-hidden sec-container my-8 space-y-4 md:space-y-6">
+      <section className="sec-container my-8 w-full space-y-4 overflow-hidden md:space-y-6">
         <div className="flex flex-col items-center gap-0.5 md:gap-1 lg:gap-4">
           <Heading asChild hdSize="h4">
             <h4>Trusted by Clients, Loved by Audiences</h4>
