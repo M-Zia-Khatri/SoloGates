@@ -47,7 +47,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --breakpoint-3xl: 1920px;
+  /* --breakpoint-3xl: 1920px; */
 
   --color-Bg-Primary: rgb(16, 16, 16);
   --color-Main: rgb(9, 70, 110);
