@@ -1,11 +1,7 @@
 // import ThreeDEarth from './ThreeDEartht';
 
 const ShowcaseServicesContent = () => {
-  return (
-    <div>
-      {/* <ThreeDEarth /> */}
-    </div>
-  );
+  return <div>{/* <ThreeDEarth /> */} in progress</div>;
 };
 
 export default ShowcaseServicesContent;

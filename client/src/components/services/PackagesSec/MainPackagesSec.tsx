@@ -46,7 +46,7 @@ const socialMediaPackages: PackageData[] = [
     price: 1499,
     desc: 'For growing brands to scale reach and boost sales.',
     features: [
-      '3—4 Ads Campaigns (FB, IG)',
+      '3-4 Ads Campaigns (FB, IG)',
       '16-18 Social Media Posts',
       '6 Reels/Short Videos',
       '8 Story Designs',
@@ -105,13 +105,16 @@ const videoEditingPackages: PackageData[] = [
 
 const MainPackagesSec = () => {
   return (
-    <section className="sec-container my-6 md:my-8 lg:my-10 xl:my-12 2xl:my-14">
-      <div>
-        <PackagesSec title="Social Media Packages" data={socialMediaPackages} />
-        <PackagesSec
-          title="Social Media Packages"
-          data={videoEditingPackages}
-        />
+    <section className="sec-container my-6 md:my-10 lg:my-14 xl:my-16 2xl:my-14 overflow-x-hidden">
+      <div className="flex flex-col items-center gap-8 md:gap-12 lg:gap-16 xl:gap-20 2xl:gap-24 ">
+          <PackagesSec
+            title="Social Media Packages"
+            data={socialMediaPackages}
+          />
+          <PackagesSec
+            title="Video Editing Packages"
+            data={videoEditingPackages}
+          />
       </div>
     </section>
   );
