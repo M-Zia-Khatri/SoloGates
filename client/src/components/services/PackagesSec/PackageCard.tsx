@@ -54,10 +54,7 @@ export default function PackageCard({
         <div className="">
           <p className="mb-1.5">{desc}</p>
           {/* Decorative line below description */}
-          <div className="flex w-full items-center justify-center">
-            <HrLine className="h-[3px] w-1/2" />
-            <HrLine className="h-[3px] w-1/2" isRotate />
-          </div>
+          <HrLine className="h-[2px]" variant="center" />
         </div>
       </div>
 
