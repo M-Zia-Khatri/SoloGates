@@ -38,7 +38,7 @@ const Services = () => {
       <ServicesBannerSec />
       <section className="sec-container">
         {/* heading  */}
-        <div className="mt-2 flex items-center justify-center gap-1.5 ">
+        <div className="mt-2 flex items-center justify-center gap-1.5">
           <HrLine className="h-[3px] w-[4vw]" />
           <h3 className="flex shrink-0 font-semibold">
             Your&nbsp;
@@ -46,6 +46,7 @@ const Services = () => {
           </h3>
           <HrLine className="h-[3px] w-[4vw]" isRotate />
         </div>
+
         <ShowcaseServicesContent />
       </section>
       <MainPackagesSec />

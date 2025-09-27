@@ -39,15 +39,15 @@ export default function Home() {
     <>
       <HeroSec />
       <IntroSec />
-      <section className="sec-container">
+      <section className="sec-container my-4 md:my-6 lg:my-8 xl:my-10 2xl:my-12">
         {/* heading & sub-heading & sub-title */}
-        <div className="">
+        <div className="flex flex-col justify-center items-center">
           {/* heading */}
           <Heading asChild hdSize="h3">
             <h3>What We Do</h3>
           </Heading>
 
-          <div className="my-4">
+          <div className="my-2">
             {/* sub-heading */}
             <div className="mt-2 flex items-center justify-center gap-1.5 lg:mt-4">
               <HrLine className="h-[3px] w-[4vw]" />
@@ -58,7 +58,7 @@ export default function Home() {
               <HrLine className="h-[3px] w-[4vw]" isRotate />
             </div>
             {/* sub-title */}
-            <p>
+            <p className='text-center'>
               At Sologate, every service is designed to move your brand closer
               to influence, impact, and growth.
             </p>
