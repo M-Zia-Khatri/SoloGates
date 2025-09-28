@@ -1,5 +1,7 @@
+import ContactFormSec from '@/components/contact/ContactFormSec';
+
 const ContactUs = () => {
-  return <div>ContactUs</div>;
+  return <ContactFormSec />;
 };
 
 export default ContactUs;

@@ -6,6 +6,7 @@ import Home from '../pages/user_pages/Home';
 import AboutUs from '../pages/user_pages/AboutUs';
 import Portfolio from '@/pages/user_pages/Portfolio';
 import Services from '@/pages/user_pages/Services';
+import ContactUs from '@/pages/user_pages/ContactUs';
 
 const AppRoutes: RouteObject[] = [
   {
@@ -16,6 +17,7 @@ const AppRoutes: RouteObject[] = [
       { path: AppNavigation.about, element: <AboutUs /> },
       { path: AppNavigation.services, element: <Services /> },
       { path: AppNavigation.portfolio, element: <Portfolio /> },
+      { path: AppNavigation.contact, element: <ContactUs /> },
       {
         path: '*',
         element: <Navigate to="/" />,

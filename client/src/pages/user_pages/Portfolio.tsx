@@ -1,5 +1,5 @@
 import HrLine from '@/components/ui/HrLine';
-import PortfolioBanner from '../portfolio/PortfolioBanner';
+import PortfolioBanner from '../../components/Portfolio/PortfolioBanner';
 import TrustedBy from '@/components/TrustedBy';
 import { assetsUrl } from '@/constants/urlConstants';
 import TestimonialContainer from '@/components/Testimonial/TestimonialContainer';

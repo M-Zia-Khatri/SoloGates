@@ -26,6 +26,7 @@ export default function Topbar() {
       { label: 'About Us', href: AppNavigation.about },
       { label: 'Services', href: AppNavigation.services },
       { label: 'Portfolio', href: AppNavigation.portfolio },
+      { label: 'Contact Us', href: AppNavigation.contact },
     ],
     []
   );
@@ -105,7 +106,15 @@ export default function Topbar() {
         <div className="fixed right-8 bottom-6 z-50 hidden md:block">
           <div />
           <Button>
-            <Link className="capitalize xl:text-lg" to={AppNavigation.contact}>
+            <Link
+              className="flex h-full w-full items-center capitalize xl:text-lg"
+              to={AppNavigation.contact}
+            >
+              <img
+                className="mr-2 h-4 xl:h-5"
+                src={`${assetsUrl.gifUrl}phone.gif`}
+                alt=""
+              />
               Let's Talk
             </Link>
           </Button>
