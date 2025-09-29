@@ -1,0 +1,86 @@
+import { useState } from 'react';
+import { Check, ChevronsUpDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from '@/components/ui/command';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+
+interface ComboboxProps {
+  options: { label: string; value: string }[];
+  value?: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+}
+
+export const TimeZoneCombobox: React.FC<ComboboxProps> = ({
+  options,
+  value,
+  onChange,
+  placeholder,
+}) => {
+  const [open, setOpen] = useState(false);
+
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full justify-between bg-transparent text-[#DDDCDC]/50"
+        >
+          {value
+            ? options.find((option) => option.value === value)?.label
+            : placeholder}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent
+        className="w-[--radix-popover-trigger-width] rounded-[5px] border border-white/30 bg-white/10 p-0 text-white shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[4px]"
+        style={{
+          maxHeight: 'var(--radix-popover-content-available-height)',
+          overflowY: 'auto',
+        }}
+      >
+        <Command className="bg-transparent">
+          <CommandInput placeholder="Search time zone..." />
+          <CommandList>
+            <CommandEmpty>No time zone found.</CommandEmpty>
+            <CommandGroup>
+              {options.map((option) => (
+                <CommandItem
+                  key={option.value}
+                  value={option.value}
+                  onSelect={(currentValue) => {
+                    onChange(currentValue === value ? '' : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      'mr-2 h-4 w-4',
+                      value === option.value ? 'opacity-100' : 'opacity-0'
+                    )}
+                  />
+                  {option.label}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+};

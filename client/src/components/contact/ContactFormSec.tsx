@@ -1,36 +1,31 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Form, FormLabel } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { ChevronDown, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import emailjs from 'emailjs-com';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { format } from 'date-fns';
+import { useQuery } from '@tanstack/react-query';
+import * as Sentry from '@sentry/react';
+
 import { assetsUrl } from '@/constants/urlConstants';
 import { Heading } from '../ui/Heading';
-import { useQuery } from '@tanstack/react-query';
 import HrLine from '../ui/HrLine';
 
-// ✅ Validation schema
+// Import the refactored field components
+import { FullNameField } from './fields/FullNameField';
+import { EmailField } from './fields/EmailField';
+import { SubjectField } from './fields/SubjectField';
+import { MessageField } from './fields/MessageField';
+import { TimeZoneField } from './fields/TimeZoneField';
+import { AppointmentTimeField } from './fields/AppointmentTimeField';
+import { convertTimeSlots } from '@/lib/timeUtils';
+
+// ✅ Validation Schema
 const formSchema = z
   .object({
     fullName: z.string().min(2, { message: 'Full Name is required' }),
@@ -39,12 +34,20 @@ const formSchema = z
     message: z.string().min(5, { message: 'Please enter a message' }),
     appointmentDate: z.date().optional(),
     timeZone: z.string().optional(),
-    appointmentTime: z.string().optional(),
+
+    // --- ⬇️ FIX 1: Define the correct shape for appointmentTime ⬇️ ---
+    appointmentTime: z
+      .object({
+        original: z.string(),
+        converted: z.string(),
+      })
+      .optional(),
   })
   .refine(
     (data) => {
       if (data.appointmentDate) {
-        return !!data.timeZone && !!data.appointmentTime;
+        // --- ⬇️ FIX 2: Check the 'original' property in the refine logic ⬇️ ---
+        return !!data.timeZone && !!data.appointmentTime?.original;
       }
       return true;
     },
@@ -54,34 +57,95 @@ const formSchema = z
     }
   );
 
-type ContactFormValues = z.infer<typeof formSchema>;
+// ✅ Export the type so child components can use it
+export type ContactFormValues = z.infer<typeof formSchema>;
 
+// ✅ Helper function to format GMT strings consistently
+const formatGmtOffset = (gmtString: string): string => {
+  if (gmtString === 'GMT') {
+    return 'GMT+00:00';
+  }
+  const match = gmtString.match(/GMT([+-])(\d{1,2})$/);
+  if (match) {
+    const sign = match[1];
+    const hours = match[2].padStart(2, '0');
+    return `GMT${sign}${hours}:00`;
+  }
+  const fullMatch = gmtString.match(/GMT([+-])(\d{1,2}):(\d{2})$/);
+  if (fullMatch) {
+    const sign = fullMatch[1];
+    const hours = fullMatch[2].padStart(2, '0');
+    const minutes = fullMatch[3];
+    return `GMT${sign}${hours}:${minutes}`;
+  }
+  return gmtString;
+};
+
+// ✅ Data Fetching & Utility Functions (with your custom value format)
 const fetchTimeZones = async (): Promise<
   { label: string; value: string }[]
 > => {
-  const res = await fetch('https://worldtimeapi.org/api/timezone');
-  if (!res.ok) throw new Error('Failed to fetch time zones');
-  const zones: string[] = await res.json();
-  return zones.map((tz) => ({
-    label: tz.replace(/_/g, ' '),
-    value: tz,
-  }));
+  const zones = Intl.supportedValuesOf('timeZone');
+
+  return zones.map((tz) => {
+    const formatter = new Intl.DateTimeFormat('en', {
+      timeZone: tz,
+      timeZoneName: 'longOffset',
+    });
+    const parts = formatter.formatToParts(new Date());
+    const timeZonePart = parts.find((part) => part.type === 'timeZoneName');
+    const rawGmtString = timeZonePart ? timeZonePart.value : 'GMT';
+    const formattedGmt = formatGmtOffset(rawGmtString);
+
+    return {
+      // The user-friendly text for the dropdown
+      // Example: "America/New York (GMT-04:00)"
+      label: `${tz.replace(/_/g, ' ')} (${formattedGmt})`,
+
+      // The specific composite value you requested for the form
+      // Example: "TZ_America/New York_GMT_-04:00"
+      value: tz,
+    };
+  });
 };
 
-// ✅ Timeslots
-const timeSlots = [
-  '11:00am',
-  '11:30am',
-  '12:00pm',
-  '12:30pm',
-  '1:00pm',
-  '1:30pm',
-  '2:00pm',
-];
+const createClipPaths = (w: number, h: number) => {
+  const isNarrow = h > w;
+  const anglePercentage = isNarrow ? '5%' : '15%';
+  const angleOffsetPx = w - h * (isNarrow ? 0.05 : 0.15);
+  const polygon = (...points: string[]) => `polygon(${points.join(', ')})`;
+  return {
+    base: polygon(
+      `0% 0%`,
+      `${angleOffsetPx}px 0%`,
+      `100% ${anglePercentage}`,
+      `100% 100%`,
+      `0% 100%`
+    ),
+    offset: polygon(
+      `0% 0%`,
+      `${angleOffsetPx + 2}px 0%`,
+      `100% ${anglePercentage}`,
+      `100% 100%`,
+      `0% 100%`
+    ),
+  };
+};
 
-// Helper function for clip-path
-const polygon = (...points: string[]) => `polygon(${points.join(', ')})`;
+const formatAppointment = (date?: Date, time?: string) => {
+  if (!date || !time) return '';
+  const match = time.match(/(\d{1,2}):(\d{2})(am|pm)/);
+  if (!match) return '';
+  const [, h, m, modifier] = match;
+  let hours = parseInt(h, 10);
+  if (modifier === 'pm' && hours < 12) hours += 12;
+  if (modifier === 'am' && hours === 12) hours = 0;
+  const newDate = new Date(date);
+  newDate.setHours(hours, parseInt(m, 10), 0, 0);
+  return format(newDate, 'PPP p');
+};
 
+// ✅ Main Wrapper Component
 const ContactFormSec: React.FC = () => {
   const bgRef = useRef<HTMLDivElement>(null);
   const [clipPaths, setClipPaths] = useState<{ base: string; offset: string }>({
@@ -92,6 +156,20 @@ const ContactFormSec: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState<null | 'success' | 'error'>(null);
 
+  const ORIGINAL_TIME_SLOTS = useMemo(
+    () =>
+      [
+        '11:00am',
+        '11:30am',
+        '12:00pm',
+        '12:30pm',
+        '1:00pm',
+        '1:30pm',
+        '2:00pm',
+      ] as const,
+    []
+  );
+
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -101,20 +179,36 @@ const ContactFormSec: React.FC = () => {
       message: '',
       appointmentDate: undefined,
       timeZone: '',
-      appointmentTime: '',
+      appointmentTime: undefined,
     },
   });
 
   const { data: timeZones = [] } = useQuery({
     queryKey: ['timeZones'],
     queryFn: fetchTimeZones,
+    staleTime: 1000 * 60 * 60, // 1 hour
   });
 
   const appointmentDate = form.watch('appointmentDate');
   const timeZone = form.watch('timeZone');
-  const { resetField } = form;
+  const { resetField, setValue, getValues } = form;
 
-  // ✅ Reset fields dynamically
+  // NEW: Calculate the converted time slots using useMemo
+  const timeSlots = useMemo(() => {
+    // We can only convert if we have both the date and the timezone
+    if (appointmentDate && timeZone) {
+      // The `timeZone` value here is the IANA name, which is what we need.
+      // NOTE: If you are using the composite value "TZ_...", you will need to extract the IANA name first.
+      // Let's assume you've switched back to using the IANA name as the value.
+      return convertTimeSlots(ORIGINAL_TIME_SLOTS, timeZone, appointmentDate);
+    }
+    // If we don't have enough info, show the original slots as a fallback
+    return ORIGINAL_TIME_SLOTS.map((slot) => ({
+      original: slot,
+      converted: slot,
+    }));
+  }, [appointmentDate, timeZone, ORIGINAL_TIME_SLOTS]);
+
   useEffect(() => {
     if (!appointmentDate) {
       resetField('timeZone');
@@ -128,51 +222,42 @@ const ContactFormSec: React.FC = () => {
     }
   }, [timeZone, resetField]);
 
-  // ✅ Handle form submission
-  const onSubmit = async (values: ContactFormValues) => {
-    setLoading(true);
-    setSent(null);
-    try {
-      let appointmentString = '';
-      if (values.appointmentDate && values.appointmentTime) {
-        const appointment = new Date(values.appointmentDate);
-        const match = values.appointmentTime.match(/(\d{1,2}):(\d{2})(am|pm)/);
-        if (match) {
-          const [, h, m, modifier] = match;
-          let hours = parseInt(h, 10);
-          const minutes = parseInt(m, 10);
-          if (modifier === 'pm' && hours < 12) hours += 12;
-          if (modifier === 'am' && hours === 12) hours = 0;
-          appointment.setHours(hours, minutes, 0, 0);
-          appointmentString = format(appointment, 'PPP p');
-        }
+  const onSubmit = useCallback(
+    async (values: ContactFormValues) => {
+      setLoading(true);
+      setSent(null);
+      try {
+        const appointmentString = formatAppointment(
+          values.appointmentDate,
+          values.appointmentTime?.original // Use the .original property
+        );
+        await emailjs.send(
+          import.meta.env.VITE_EMAILJS_SERVICE_ID,
+          import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+          {
+            from_name: values.fullName,
+            from_email: values.email,
+            subject: values.subject,
+            message: values.message,
+            appointment: appointmentString,
+            timezone: values.timeZone,
+          },
+          import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+        );
+        setSent('success');
+        form.reset();
+        setShowCalendar(false);
+      } catch (error) {
+        console.error('EmailJS error:', error);
+        Sentry.captureException(error); // Report error to a service
+        setSent('error');
+      } finally {
+        setLoading(false);
       }
+    },
+    [form]
+  );
 
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          from_name: values.fullName,
-          from_email: values.email,
-          subject: values.subject,
-          message: values.message,
-          appointment: appointmentString,
-          timezone: values.timeZone,
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      );
-      setSent('success');
-      form.reset();
-      setShowCalendar(false);
-    } catch (error) {
-      console.error('EmailJS error:', error);
-      setSent('error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // ✅ Auto-hide success/error after 4s
   useEffect(() => {
     if (sent) {
       const timer = setTimeout(() => setSent(null), 4000);
@@ -180,30 +265,10 @@ const ContactFormSec: React.FC = () => {
     }
   }, [sent]);
 
-  // ✅ Update clip paths on resize
   const updateClipPath = useCallback(() => {
     if (bgRef.current) {
       const { offsetWidth, offsetHeight } = bgRef.current;
-      const isNarrow = offsetHeight > offsetWidth;
-      const anglePercentage = isNarrow ? '5%' : '15%';
-      const angleOffsetPx =
-        offsetWidth - offsetHeight * (isNarrow ? 0.05 : 0.15);
-
-      const base = polygon(
-        `0% 0%`,
-        `${angleOffsetPx}px 0%`,
-        `100% ${anglePercentage}`,
-        `100% 100%`,
-        `0% 100%`
-      );
-      const offset = polygon(
-        `0% 0%`,
-        `${angleOffsetPx + 2}px 0%`,
-        `100% ${anglePercentage}`,
-        `100% 100%`,
-        `0% 100%`
-      );
-      setClipPaths({ base, offset });
+      setClipPaths(createClipPaths(offsetWidth, offsetHeight));
     }
   }, []);
 
@@ -213,6 +278,7 @@ const ContactFormSec: React.FC = () => {
     return () => window.removeEventListener('resize', updateClipPath);
   }, [updateClipPath]);
 
+  console.log(form.watch('appointmentTime'));
   return (
     <section className="sec-container">
       <div className="my-6 flex flex-col items-center justify-center gap-4">
@@ -220,14 +286,14 @@ const ContactFormSec: React.FC = () => {
           <h2>Contact Us</h2>
         </Heading>
         <div className="flex items-center justify-center">
-          <HrLine className="w-[3.5vw]" isRotate />
-          <p className="mx-4 font-bold">
-            REACH US&nps;
-            <span className="font-Sora inline-block font-extralight italic">
+          <HrLine className="h-0.5 w-[3.5vw] py-0" isRotate />
+          <h3 className="mx-4 font-bold">
+            REACH US{' '}
+            <h3 className="font-Sora inline-block font-extralight italic">
               ANYTIME
-            </span>
-          </p>
-          <HrLine className="w-[3.5vw]" />
+            </h3>
+          </h3>
+          <HrLine className="h-0.5 w-[3.5vw] py-0" />
         </div>
       </div>
 
@@ -249,7 +315,7 @@ const ContactFormSec: React.FC = () => {
           />
         </>
 
-        <div className="flex flex-col items-center justify-center gap-4">
+        <div className="mb-4 flex flex-col items-center justify-center gap-4">
           <div className="from-Secondary bg-gradient-to-r from-[-10%] to-black to-[150%] p-1 drop-shadow-[0_0_10px_rgba(111,204,221)]">
             <img
               className="h-12 md:h-14 lg:h-16"
@@ -269,78 +335,10 @@ const ContactFormSec: React.FC = () => {
           >
             {/* Left side */}
             <div className="col-span-1 flex flex-col gap-4">
-              <FormField
-                control={form.control}
-                name="fullName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Full Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="John Doe" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email Address</FormLabel>
-                    <FormControl>
-                      <Input placeholder="johndoe@example.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="subject"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Subject of Interest</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select subject" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent className="rounded-[5px] border border-white/30 bg-white/10 text-white shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[4px]">
-                        <SelectItem value="Socialmedia marketing">
-                          Social Media Marketing
-                        </SelectItem>
-                        <SelectItem value="Creative reels & vsls">
-                          Creative Reels & VSLs
-                        </SelectItem>
-                        <SelectItem value="Content Writing">
-                          Content Writing
-                        </SelectItem>
-                        <SelectItem value="Branding">Branding</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>How may we assist you?</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Hi, can you share your portfolio?"
-                        rows={4}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <FullNameField control={form.control} />
+              <EmailField control={form.control} />
+              <SubjectField control={form.control} />
+              <MessageField control={form.control} />
             </div>
 
             {/* Right side */}
@@ -354,12 +352,15 @@ const ContactFormSec: React.FC = () => {
                       'flex max-h-[46.2px] w-full justify-between border border-[#DDDCDC]/50 px-3.5 py-3 text-left font-normal text-[#DDDCDC]/50'
                     )}
                     onClick={() => setShowCalendar((prev) => !prev)}
+                    aria-expanded={showCalendar} // Add this
+                    aria-controls="appointment-fields" // Add this
                   >
                     {appointmentDate ? (
                       <span>
                         {format(appointmentDate, 'PPP')}
-                        {form.getValues('appointmentTime')
-                          ? ` at ${form.getValues('appointmentTime')}`
+                        {/* --- ⬇️ FIX 5: Display the .converted property for the user ⬇️ --- */}
+                        {getValues('appointmentTime')?.converted
+                          ? ` at ${getValues('appointmentTime')?.converted}`
                           : ''}
                       </span>
                     ) : (
@@ -370,71 +371,30 @@ const ContactFormSec: React.FC = () => {
                 </div>
 
                 {showCalendar && (
-                  <div className="flex flex-col gap-5 lg:flex-row">
+                  <div
+                    id="appointment-fields"
+                    className="flex flex-col gap-5 lg:flex-row"
+                  >
                     <div className="flex flex-col items-center gap-5">
                       <Calendar
                         mode="single"
                         selected={appointmentDate}
-                        onSelect={(date) => {
-                          form.setValue('appointmentDate', date);
-                        }}
+                        onSelect={(date) => setValue('appointmentDate', date)}
                         initialFocus
                         className="rounded-[5px] border border-white/30 bg-white/10 text-white shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[4px]"
                       />
                       {appointmentDate && (
-                        <FormField
+                        <TimeZoneField
                           control={form.control}
-                          name="timeZone"
-                          render={({ field }) => (
-                            <FormItem className="w-full">
-                              <Select
-                                onValueChange={field.onChange}
-                                value={field.value}
-                              >
-                                <FormControl>
-                                  <SelectTrigger className="w-full">
-                                    <SelectValue placeholder="Select time zone" />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent className="rounded-[5px] border border-white/30 bg-white/10 text-white shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[4px]">
-                                  {timeZones.map((tz) => (
-                                    <SelectItem key={tz.value} value={tz.value}>
-                                      {tz.label}
-                                    </SelectItem>
-                                  ))}
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
+                          timeZones={timeZones}
                         />
                       )}
                     </div>
                     {timeZone && (
                       <div className="w-full">
-                        <FormField
+                        <AppointmentTimeField
                           control={form.control}
-                          name="appointmentTime"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormControl>
-                                <div className="grid h-full grid-cols-2 gap-4">
-                                  {timeSlots.map((time) => (
-                                    <Button
-                                      key={time}
-                                      type="button"
-                                      onClick={() => {
-                                        field.onChange(time);
-                                      }}
-                                    >
-                                      {time}
-                                    </Button>
-                                  ))}
-                                </div>
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
+                          timeSlots={timeSlots}
                         />
                       </div>
                     )}
@@ -453,6 +413,7 @@ const ContactFormSec: React.FC = () => {
           </form>
         </Form>
 
+        {/* Success / Error Alert */}
         {sent && (
           <div
             className={cn(
